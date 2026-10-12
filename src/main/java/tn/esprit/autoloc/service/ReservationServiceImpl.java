@@ -9,15 +9,20 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ReservationServiceImpl implements IReservationService {
-    private final ReservationRepository reservationRepository;
+    private final ReservationRepository repository;
+
+    @Override public Reservation addReservation(Reservation reservation) { return repository.save(reservation); }
+    @Override public List<Reservation> getAllReservations() { return repository.findAll(); }
+    @Override public Reservation getReservationById(Long id) { return repository.findById(id).orElse(null); }
 
     @Override
-    public Reservation addReservation(Reservation reservation) {
-        return reservationRepository.save(reservation);
+    public Reservation updateReservation(Long id, Reservation reservation) {
+        if(repository.existsById(id)) {
+            reservation.setIdReservation(id);
+            return repository.save(reservation);
+        }
+        return null;
     }
 
-    @Override
-    public List<Reservation> getAllReservations() {
-        return reservationRepository.findAll();
-    }
+    @Override public void deleteReservation(Long id) { repository.deleteById(id); }
 }

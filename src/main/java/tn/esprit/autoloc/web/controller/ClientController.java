@@ -10,15 +10,11 @@ import java.util.List;
 @RequestMapping("/api/clients")
 @RequiredArgsConstructor
 public class ClientController {
-    private final IClientService clientService;
+    private final IClientService service;
 
-    @PostMapping
-    public Client addClient(@RequestBody Client client) {
-        return clientService.addClient(client);
-    }
-
-    @GetMapping
-    public List<Client> getAllClients() {
-        return clientService.getAllClients();
-    }
+    @PostMapping public Client addClient(@RequestBody Client client) { return service.addClient(client); }
+    @GetMapping public List<Client> getAllClients() { return service.getAllClients(); }
+    @GetMapping("/{id}") public Client getClientById(@PathVariable Long id) { return service.getClientById(id); }
+    @PutMapping("/{id}") public Client updateClient(@PathVariable Long id, @RequestBody Client client) { return service.updateClient(id, client); }
+    @DeleteMapping("/{id}") public void deleteClient(@PathVariable Long id) { service.deleteClient(id); }
 }

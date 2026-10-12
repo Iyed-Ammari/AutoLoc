@@ -10,15 +10,11 @@ import java.util.List;
 @RequestMapping("/api/vehicules")
 @RequiredArgsConstructor
 public class VehiculeController {
-    private final IVehiculeService vehiculeService;
+    private final IVehiculeService service;
 
-    @PostMapping
-    public Vehicule addVehicule(@RequestBody Vehicule vehicule) {
-        return vehiculeService.addVehicule(vehicule);
-    }
-
-    @GetMapping
-    public List<Vehicule> getAllVehicules() {
-        return vehiculeService.getAllVehicules();
-    }
+    @PostMapping public Vehicule addVehicule(@RequestBody Vehicule vehicule) { return service.addVehicule(vehicule); }
+    @GetMapping public List<Vehicule> getAllVehicules() { return service.getAllVehicules(); }
+    @GetMapping("/{id}") public Vehicule getVehiculeById(@PathVariable Long id) { return service.getVehiculeById(id); }
+    @PutMapping("/{id}") public Vehicule updateVehicule(@PathVariable Long id, @RequestBody Vehicule vehicule) { return service.updateVehicule(id, vehicule); }
+    @DeleteMapping("/{id}") public void deleteVehicule(@PathVariable Long id) { service.deleteVehicule(id); }
 }

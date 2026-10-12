@@ -10,15 +10,11 @@ import java.util.List;
 @RequestMapping("/api/paiements")
 @RequiredArgsConstructor
 public class PaiementController {
-    private final IPaiementService paiementService;
+    private final IPaiementService service;
 
-    @PostMapping
-    public Paiement addPaiement(@RequestBody Paiement paiement) {
-        return paiementService.addPaiement(paiement);
-    }
-
-    @GetMapping
-    public List<Paiement> getAllPaiements() {
-        return paiementService.getAllPaiements();
-    }
+    @PostMapping public Paiement addPaiement(@RequestBody Paiement paiement) { return service.addPaiement(paiement); }
+    @GetMapping public List<Paiement> getAllPaiements() { return service.getAllPaiements(); }
+    @GetMapping("/{id}") public Paiement getPaiementById(@PathVariable Long id) { return service.getPaiementById(id); }
+    @PutMapping("/{id}") public Paiement updatePaiement(@PathVariable Long id, @RequestBody Paiement paiement) { return service.updatePaiement(id, paiement); }
+    @DeleteMapping("/{id}") public void deletePaiement(@PathVariable Long id) { service.deletePaiement(id); }
 }

@@ -9,15 +9,20 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AgenceServiceImpl implements IAgenceService {
-    private final AgenceRepository agenceRepository;
+    private final AgenceRepository repository;
+
+    @Override public Agence addAgence(Agence agence) { return repository.save(agence); }
+    @Override public List<Agence> getAllAgences() { return repository.findAll(); }
+    @Override public Agence getAgenceById(Long id) { return repository.findById(id).orElse(null); }
 
     @Override
-    public Agence addAgence(Agence agence) {
-        return agenceRepository.save(agence);
+    public Agence updateAgence(Long id, Agence agence) {
+        if(repository.existsById(id)) {
+            agence.setIdAgence(id);
+            return repository.save(agence);
+        }
+        return null;
     }
 
-    @Override
-    public List<Agence> getAllAgences() {
-        return agenceRepository.findAll();
-    }
+    @Override public void deleteAgence(Long id) { repository.deleteById(id); }
 }

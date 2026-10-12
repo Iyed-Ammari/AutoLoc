@@ -10,15 +10,11 @@ import java.util.List;
 @RequestMapping("/api/agences")
 @RequiredArgsConstructor
 public class AgenceController {
-    private final IAgenceService agenceService;
+    private final IAgenceService service;
 
-    @PostMapping
-    public Agence addAgence(@RequestBody Agence agence) {
-        return agenceService.addAgence(agence);
-    }
-
-    @GetMapping
-    public List<Agence> getAllAgences() {
-        return agenceService.getAllAgences();
-    }
+    @PostMapping public Agence addAgence(@RequestBody Agence agence) { return service.addAgence(agence); }
+    @GetMapping public List<Agence> getAllAgences() { return service.getAllAgences(); }
+    @GetMapping("/{id}") public Agence getAgenceById(@PathVariable Long id) { return service.getAgenceById(id); }
+    @PutMapping("/{id}") public Agence updateAgence(@PathVariable Long id, @RequestBody Agence agence) { return service.updateAgence(id, agence); }
+    @DeleteMapping("/{id}") public void deleteAgence(@PathVariable Long id) { service.deleteAgence(id); }
 }

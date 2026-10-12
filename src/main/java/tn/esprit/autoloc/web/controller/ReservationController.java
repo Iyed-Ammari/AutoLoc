@@ -10,15 +10,11 @@ import java.util.List;
 @RequestMapping("/api/reservations")
 @RequiredArgsConstructor
 public class ReservationController {
-    private final IReservationService reservationService;
+    private final IReservationService service;
 
-    @PostMapping
-    public Reservation addReservation(@RequestBody Reservation reservation) {
-        return reservationService.addReservation(reservation);
-    }
-
-    @GetMapping
-    public List<Reservation> getAllReservations() {
-        return reservationService.getAllReservations();
-    }
+    @PostMapping public Reservation addReservation(@RequestBody Reservation reservation) { return service.addReservation(reservation); }
+    @GetMapping public List<Reservation> getAllReservations() { return service.getAllReservations(); }
+    @GetMapping("/{id}") public Reservation getReservationById(@PathVariable Long id) { return service.getReservationById(id); }
+    @PutMapping("/{id}") public Reservation updateReservation(@PathVariable Long id, @RequestBody Reservation reservation) { return service.updateReservation(id, reservation); }
+    @DeleteMapping("/{id}") public void deleteReservation(@PathVariable Long id) { service.deleteReservation(id); }
 }

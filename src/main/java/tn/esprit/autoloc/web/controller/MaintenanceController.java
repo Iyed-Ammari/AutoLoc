@@ -10,15 +10,11 @@ import java.util.List;
 @RequestMapping("/api/maintenances")
 @RequiredArgsConstructor
 public class MaintenanceController {
-    private final IMaintenanceService maintenanceService;
+    private final IMaintenanceService service;
 
-    @PostMapping
-    public Maintenance addMaintenance(@RequestBody Maintenance maintenance) {
-        return maintenanceService.addMaintenance(maintenance);
-    }
-
-    @GetMapping
-    public List<Maintenance> getAllMaintenances() {
-        return maintenanceService.getAllMaintenances();
-    }
+    @PostMapping public Maintenance addMaintenance(@RequestBody Maintenance maintenance) { return service.addMaintenance(maintenance); }
+    @GetMapping public List<Maintenance> getAllMaintenances() { return service.getAllMaintenances(); }
+    @GetMapping("/{id}") public Maintenance getMaintenanceById(@PathVariable Long id) { return service.getMaintenanceById(id); }
+    @PutMapping("/{id}") public Maintenance updateMaintenance(@PathVariable Long id, @RequestBody Maintenance maintenance) { return service.updateMaintenance(id, maintenance); }
+    @DeleteMapping("/{id}") public void deleteMaintenance(@PathVariable Long id) { service.deleteMaintenance(id); }
 }

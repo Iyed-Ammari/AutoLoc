@@ -9,15 +9,20 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PaiementServiceImpl implements IPaiementService {
-    private final PaiementRepository paiementRepository;
+    private final PaiementRepository repository;
+
+    @Override public Paiement addPaiement(Paiement paiement) { return repository.save(paiement); }
+    @Override public List<Paiement> getAllPaiements() { return repository.findAll(); }
+    @Override public Paiement getPaiementById(Long id) { return repository.findById(id).orElse(null); }
 
     @Override
-    public Paiement addPaiement(Paiement paiement) {
-        return paiementRepository.save(paiement);
+    public Paiement updatePaiement(Long id, Paiement paiement) {
+        if(repository.existsById(id)) {
+            paiement.setIdPaiement(id);
+            return repository.save(paiement);
+        }
+        return null;
     }
 
-    @Override
-    public List<Paiement> getAllPaiements() {
-        return paiementRepository.findAll();
-    }
+    @Override public void deletePaiement(Long id) { repository.deleteById(id); }
 }
