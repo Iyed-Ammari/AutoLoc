@@ -1,5 +1,7 @@
 package tn.esprit.autoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,11 +25,14 @@ public class Reservation {
     private StatutReservation statut;
 
     @ManyToOne
+    @JsonBackReference
     private Client client;
 
     @ManyToOne
+    @JsonBackReference("vehicule-reservations")
     private Vehicule vehicule;
 
-    @OneToOne(mappedBy = "reservation")
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Contrat contrat;
 }

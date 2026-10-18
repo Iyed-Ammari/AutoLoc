@@ -1,5 +1,6 @@
 package tn.esprit.autoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,5 +20,6 @@ public class Equipement {
     private Long idEquipement;
     private String libelle;
     @ManyToMany(mappedBy = "equipements")
+    @JsonIgnoreProperties("equipements") // Ignore la propriété "equipements" côté Vehicule
     private List<Vehicule> vehicules;
 }
