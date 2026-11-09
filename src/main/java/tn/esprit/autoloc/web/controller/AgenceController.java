@@ -1,17 +1,16 @@
 package tn.esprit.autoloc.web.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.autoloc.domain.Agence;
 import tn.esprit.autoloc.service.IAgenceService;
+import tn.esprit.autoloc.web.dto.AgenceDto;
 
 import java.util.List;
 
-@Tag(name = "Gestion des Agences", description = "Endpoints CRUD pour la gestion des agences")
+@Tag(name = "Gestion des Agences (DTO)")
 @RestController
 @RequestMapping("/api/agences")
 @RequiredArgsConstructor
@@ -19,47 +18,31 @@ public class AgenceController {
 
     private final IAgenceService agenceService;
 
-    @Operation(summary = "Créer une agence", description = "Ajoute une nouvelle agence au système")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Agence créée avec succès"),
-            @ApiResponse(responseCode = "400", description = "Requête invalide")
-    })
+    @Operation(summary = "Ajouter une agence")
     @PostMapping
-    public Agence addAgence(@RequestBody Agence agence) {
-        return agenceService.addAgence(agence);
+    public AgenceDto addAgence(@Valid @RequestBody AgenceDto dto) {
+        return agenceService.addAgence(dto);
     }
 
-    @Operation(summary = "Obtenir la liste des agences", description = "Récupère la liste de toutes les agences enregistrées")
-    @ApiResponse(responseCode = "200", description = "Liste récupérée avec succès")
+    @Operation(summary = "Lister les agences")
     @GetMapping
-    public List<Agence> getAllAgences() {
+    public List<AgenceDto> getAllAgences() {
         return agenceService.getAllAgences();
     }
 
-    @Operation(summary = "Obtenir une agence par ID", description = "Retourne les détails d'une agence spécifique")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Agence trouvée"),
-            @ApiResponse(responseCode = "404", description = "Agence introuvable")
-    })
+    @Operation(summary = "Trouver une agence par ID")
     @GetMapping("/{id}")
-    public Agence getAgenceById(@PathVariable Long id) {
+    public AgenceDto getAgenceById(@PathVariable Long id) {
         return agenceService.getAgenceById(id);
     }
 
-    @Operation(summary = "Mettre à jour une agence", description = "Modifie les informations d'une agence")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Mise à jour effectuée"),
-            @ApiResponse(responseCode = "404", description = "Agence introuvable")
-    })
+    @Operation(summary = "Mettre à jour une agence")
     @PutMapping("/{id}")
-    public Agence updateAgence(@PathVariable Long id, @RequestBody Agence agence) {
-        return agenceService.updateAgence(id, agence);
+    public AgenceDto updateAgence(@PathVariable Long id, @Valid @RequestBody AgenceDto dto) {
+        return agenceService.updateAgence(id, dto);
     }
 
-    @Operation(summary = "Supprimer une agence", description = "Supprime l'agence identifiée par son ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Agence supprimée")
-    })
+    @Operation(summary = "Supprimer une agence")
     @DeleteMapping("/{id}")
     public void deleteAgence(@PathVariable Long id) {
         agenceService.deleteAgence(id);
